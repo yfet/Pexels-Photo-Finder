@@ -1,28 +1,29 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Header from './components/Header/Header';
+import SearchResult from './components/Search/SearchResult';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+function App() {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState({ photos: [], total_results: 0 });
+
+  const onSearchChange = value => {
+    setQuery(value);
+  };
+
+  const onSearchComplete = data => {
+    setResults(data);
+    console.log('results', data);
+  };
+  return (
+    <div className="App">
+      <Header
+        onSearchChange={onSearchChange}
+        query={query}
+        onSearchComplete={onSearchComplete}
+      />
+      <SearchResult query={query} data={results} />
+    </div>
+  );
 }
 
 export default App;
